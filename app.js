@@ -11,7 +11,11 @@ var indexRouter = require('./routes/index');
 var fitnessClientsRouter = require('./routes/fitnessClients');
 
 // password has @ I need to encode it %40
-mongoose.connect('mongodb+srv://zubacnoa:T%40velsudd23@cluster0.oygeq.mongodb.net/fitnessClientsDb?retryWrites=true&w=majority&appName=Cluster0');
+const MONGO_URI = process.env.MONGO_URI;
+
+mongoose.connect(MONGO_URI)
+  .then(() => console.log("MongoDB connected"))
+  .catch(err => console.log("MongoDB connection error:", err));
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function (callback) {
